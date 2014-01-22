@@ -4,8 +4,8 @@
   <context id="context1" >
     <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/lishibook" userId="root" password="123456" />
     <javaModelGenerator targetPackage="com.lishibook.entity" targetProject="lishibook" />
-    <sqlMapGenerator targetPackage="com.lishibook.dao" targetProject="lishibook" />
-    <javaClientGenerator targetPackage="com.lishibook.dao" targetProject="lishibook" type="XMLMAPPER" />
+    <sqlMapGenerator targetPackage="com.lishibook.mapper" targetProject="lishibook" />
+    <javaClientGenerator targetPackage="com.lishibook.mapper" targetProject="lishibook" type="XMLMAPPER" />
     <table schema="lishibook" tableName="album_picture" 
     	enableCountByExample="false" enableUpdateByExample="false"
 		enableDeleteByExample="false" enableSelectByExample="false"

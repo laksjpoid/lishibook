@@ -9,6 +9,8 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<context:component-scan base-package="com.lishibook.dao" />
+	
 	<!-- 配置DataSource数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
@@ -30,7 +32,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation"
 			value="classpath:com/lishibook/config/mybatis-config.xml" />
-		<property name="mapperLocations" value="classpath*:com/lishibook/dao/*.xml" />
+		<property name="mapperLocations" value="classpath*:com/lishibook/mapper/*.xml" />
 	</bean>
 
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">

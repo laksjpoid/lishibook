@@ -4,7 +4,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -15,12 +14,10 @@ import com.lishibook.entity.AlbumPicture;
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/applicationContext.xml"})
 public class TestAlbumPictureDao {
 	@Autowired
-	private SqlSessionTemplate sqlSessionTemplate;
+	private AlbumPictureDao albumPictureDao;
 	
 	@Test
 	public void selectByPrimaryKey(){
-		AlbumPictureMapper albumPictureDao = sqlSessionTemplate.getMapper(AlbumPictureMapper.class);
-		
 		AlbumPicture albumPicture = albumPictureDao.selectByPrimaryKey(1);
 		
 		Assert.assertTrue(albumPicture.getFilename().equalsIgnoreCase("abc.jpeg"));
@@ -29,8 +26,6 @@ public class TestAlbumPictureDao {
 	
 	@Test
 	public void insert(){
-		AlbumPictureMapper albumPictureDao = sqlSessionTemplate.getMapper(AlbumPictureMapper.class);
-		
 		AlbumPicture albumPicture = new AlbumPicture();
 		albumPicture.setFilename("helloworld");
 		albumPicture.setFiletype("jpeg");
@@ -45,8 +40,6 @@ public class TestAlbumPictureDao {
 	
 	@Test
 	public void updateByPrimaryKey(){
-		AlbumPictureMapper albumPictureDao = sqlSessionTemplate.getMapper(AlbumPictureMapper.class);
-		
 		AlbumPicture albumPicture = albumPictureDao.selectByPrimaryKey(1);
 		
 		albumPicture.setDescription("my description");
@@ -60,8 +53,6 @@ public class TestAlbumPictureDao {
 	
 	@Test
 	public void deleteByPrimaryKey(){
-		AlbumPictureMapper albumPictureDao = sqlSessionTemplate.getMapper(AlbumPictureMapper.class);
-		
 		albumPictureDao.deleteByPrimaryKey(6);
 
 		AlbumPicture albumPicture = albumPictureDao.selectByPrimaryKey(6);
