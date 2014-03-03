@@ -50,4 +50,6 @@ public interface UserMapper {
      * @mbggenerated Mon Mar 03 21:09:16 CST 2014
      */
     int updateByPrimaryKey(User record);
+
+	User selectByEmail(String email);
 }

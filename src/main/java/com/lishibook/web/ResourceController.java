@@ -18,7 +18,7 @@ public class ResourceController {
 	@RequestMapping("/{resourceId}")
 	public ModelAndView showResource(@PathVariable("resourceId")int resourceid){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("showResource");
+		mv.setViewName("resource");
 		Resource resource = resourceService.getResourceByID(resourceid);
 		mv.addObject("resource", resource);
 		return mv;
