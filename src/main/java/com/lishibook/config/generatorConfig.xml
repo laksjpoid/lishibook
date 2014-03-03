@@ -6,17 +6,7 @@
     <javaModelGenerator targetPackage="com.lishibook.entity" targetProject="lishibook" />
     <sqlMapGenerator targetPackage="com.lishibook.mapper" targetProject="lishibook" />
     <javaClientGenerator targetPackage="com.lishibook.mapper" targetProject="lishibook" type="XMLMAPPER" />
-    <table schema="lishibook" tableName="album_picture" 
-    	enableCountByExample="false" enableUpdateByExample="false"
-		enableDeleteByExample="false" enableSelectByExample="false"
-		selectByExampleQueryId="false">
-    </table>
-    <table schema="lishibook" tableName="album_resource" 
-    	enableCountByExample="false" enableUpdateByExample="false"
-		enableDeleteByExample="false" enableSelectByExample="false"
-		selectByExampleQueryId="false">
-    </table>
-    <table schema="lishibook" tableName="album_user"  
+    <table schema="lishibook" tableName="pictures" 
     	enableCountByExample="false" enableUpdateByExample="false"
 		enableDeleteByExample="false" enableSelectByExample="false"
 		selectByExampleQueryId="false">
@@ -26,12 +16,12 @@
 		enableDeleteByExample="false" enableSelectByExample="false"
 		selectByExampleQueryId="false">
     </table>
-    <table schema="lishibook" tableName="resource_edition"  
+    <table schema="lishibook" tableName="resource_focus"  
     	enableCountByExample="false" enableUpdateByExample="false"
 		enableDeleteByExample="false" enableSelectByExample="false"
 		selectByExampleQueryId="false">
     </table>
-    <table schema="lishibook" tableName="resource_relation"  
+    <table schema="lishibook" tableName="resource_focusgroup"  
     	enableCountByExample="false" enableUpdateByExample="false"
 		enableDeleteByExample="false" enableSelectByExample="false"
 		selectByExampleQueryId="false">
@@ -51,27 +41,12 @@
 		enableDeleteByExample="false" enableSelectByExample="false"
 		selectByExampleQueryId="false">
     </table>
-    <table schema="lishibook" tableName="user_focus_resource"  
+    <table schema="lishibook" tableName="user_collections"  
     	enableCountByExample="false" enableUpdateByExample="false"
 		enableDeleteByExample="false" enableSelectByExample="false"
 		selectByExampleQueryId="false">
     </table>
     <table schema="lishibook" tableName="user_link"  
-    	enableCountByExample="false" enableUpdateByExample="false"
-		enableDeleteByExample="false" enableSelectByExample="false"
-		selectByExampleQueryId="false">
-    </table>
-    <table schema="lishibook" tableName="user_link_request"  
-    	enableCountByExample="false" enableUpdateByExample="false"
-		enableDeleteByExample="false" enableSelectByExample="false"
-		selectByExampleQueryId="false">
-    </table>
-    <table schema="lishibook" tableName="user_topic"  
-    	enableCountByExample="false" enableUpdateByExample="false"
-		enableDeleteByExample="false" enableSelectByExample="false"
-		selectByExampleQueryId="false">
-    </table>
-    <table schema="lishibook" tableName="user_topic_reply"  
     	enableCountByExample="false" enableUpdateByExample="false"
 		enableDeleteByExample="false" enableSelectByExample="false"
 		selectByExampleQueryId="false">
