@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/lishibook/css/lishibook.css" />
 </head>
 <body>
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-inverse navbar-static-top">
 		<div class="container">
 			<div class="navbar-header">
 				<button class="navbar-toggle" data-target=".navbar-collapse"
@@ -31,3 +31,4 @@
 			</div>
 		</div>
 	</div>
+	<div class="container">
