@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans
@@ -10,11 +9,13 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="com.lishibook.service" />
+	<context:component-scan base-package="com.lishibook.shiro" />
 
 	<!-- 配置DataSource数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/lishibook?characterEncoding=utf8"></property>
+		<property name="url"
+			value="jdbc:mysql://127.0.0.1:3306/lishibook?characterEncoding=utf8"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="123456"></property>
 		<property name="maxActive" value="100"></property>
@@ -26,8 +27,8 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	<!--  mybatis 配置  -->
+
+	<!-- mybatis 配置 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation"
@@ -35,14 +36,29 @@
 		<property name="mapperLocations" value="classpath*:com/lishibook/mapper/*.xml" />
 	</bean>
 
-	<!-- 
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory" />
-	</bean>
-	-->
-	
-	<!-- 配置 mapper 注入 -->
+	<!-- mybatis 的 mapper 注入配置-->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-  		<property name="basePackage" value="com.lishibook.mapper" />
+		<property name="basePackage" value="com.lishibook.mapper" />
+	</bean>
+
+	<!-- shiro 配置 -->
+	<bean id="myRealm" class="com.lishibook.shiro.SimpleRealm"></bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="myRealm" />
+		<!-- By default the servlet container sessions will be used. Uncomment 
+			this line to use shiro's native sessions (see the JavaDoc for more): -->
+		<!-- <property name="sessionMode" value="native"/> -->
+	</bean>
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/user/login"/> 
+		<property name="successUrl" value="/"/> 
+		<property name="unauthorizedUrl" value="/user/login"/>
+		<property name="filterChainDefinitions">
+			<value>
+				/** = anon
+			</value>
+		</property>
 	</bean>
 </beans>
