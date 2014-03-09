@@ -1,6 +1,6 @@
 		<footer>
 			<hr>
-			<p>© Company 2013</p>
+			<p>© Company 2014</p>
 		</footer>
 	</div>
 	<script src="js/jquery-2.1.0.js"></script>

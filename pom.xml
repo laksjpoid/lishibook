@@ -15,12 +15,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>${springframework-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>${springframework-version}</version>
 		</dependency>
 
 		<dependency>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>${springframework-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>${springframework-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -61,7 +61,31 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>${springframework-version}</version>
+		</dependency>
+
+		<!-- shiro-web --> 
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro-version}</version>
+		</dependency>
+		<!-- shiro-spring -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro-version}</version>
+		</dependency>
+		<!-- shiro-ehcache -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro-version}</version>
 		</dependency>
 	</dependencies>
+	
+  	<properties>
+  		<springframework-version>3.2.4.RELEASE</springframework-version>
+    	<shiro-version>1.2.3</shiro-version>
+  	</properties>
 </project>
