@@ -5,15 +5,15 @@
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-			<form class="form-signin">
+			<form class="form-signin" action="/lishibook/login" method="post">
 				<h4>欢迎登录</h4>
-				<div class="lb-height-20"></div>
+				<div class="lb-margin-top-20"></div>
 				<div class="form-group">
-					<input class="form-control" type="text" autofocus="" required=""
+					<input id="email" name="email" class="form-control" type="text" autofocus="" required=""
 						placeholder="邮箱账号">
 				</div>
-				<div class="form-group lb-height-20">
-					<input class="form-control" type="password" required=""
+				<div class="form-group lb-margin-top-20">
+					<input name="password" name="password" class="form-control" type="password" required=""
 						placeholder="密码">
 				</div>
 				<span class="checkbox"><input type="checkbox"
