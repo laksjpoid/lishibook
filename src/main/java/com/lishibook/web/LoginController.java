@@ -3,6 +3,7 @@ package com.lishibook.web;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -27,15 +28,21 @@ public class LoginController {
 		
 		Subject currentUser = SecurityUtils.getSubject();
 		
+		UsernamePasswordToken token;
 		try {
-			UsernamePasswordToken token = new UsernamePasswordToken(username, EncryptUtils.getMD5(password));
-			
+			token = new UsernamePasswordToken(username, EncryptUtils.getMD5(password));
 			currentUser.login(token);
-			modelView.setViewName("main");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch(AuthenticationException e){
+			modelView.setViewName("login");
+			modelView.addObject("loginFail", true);
+			return modelView;
 		}
+		
+		modelView.setViewName("main");
+
 		return modelView;
 	}
 }

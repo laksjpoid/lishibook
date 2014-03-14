@@ -1,6 +1,5 @@
 package com.lishibook.shiro;
 
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -42,10 +41,10 @@ public class SimpleRealm extends AuthorizingRealm {
 		
 		User user = userService.getUserByEmail(userName);
 		if(user == null){
-			throw new AuthenticationException("No such user.");
+			return null;
 		}
 		if(password.isEmpty() || !password.equals(user.getPassword())){
-			throw new AuthenticationException("Password incorrect.");
+			return null;
 		}
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userName, password.toCharArray(), getName());
 		return info;
