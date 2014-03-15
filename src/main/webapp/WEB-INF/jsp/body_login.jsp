@@ -13,12 +13,13 @@
 						autofocus="" required="" placeholder="邮箱账号">
 				</div>
 				<div class="form-group lb-margin-top-20">
-					<input name="password" name="password" class="form-control"
+					<input type="hidden" name="password" id="hiddenpassword" />
+					<input id="password" class="form-control"
 						type="password" required="" placeholder="密码">
 				</div>
 				<span class="checkbox"><input type="checkbox"
 					value="remember-me"><small>记住我 </small></span>
-				<button class="btn btn-primary btn-block" type="submit">登 录</button>
+				<button id="submit" class="btn btn-primary btn-block" type="submit">登 录</button>
 				<c:if test="${loginFail == true}">
 					<div
 						class="form-group lb-margin-top-20 alert alert-danger alert-dismissable">
