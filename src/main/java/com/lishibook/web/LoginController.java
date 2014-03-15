@@ -34,7 +34,7 @@ public class LoginController {
 			return modelView;
 		}
 		
-		modelView.setViewName("main");
+		modelView.setViewName("redirect:/");
 
 		return modelView;
 	}

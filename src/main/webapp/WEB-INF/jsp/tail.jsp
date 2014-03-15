@@ -1,4 +1,3 @@
-
 <footer>
 	<hr>
 	<p>© Company 2014</p>
