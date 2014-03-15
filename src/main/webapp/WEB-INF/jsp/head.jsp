@@ -25,9 +25,13 @@
 				<a class="navbar-brand navbar-link" href="/lishibook/">LISHIBOOK</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
+			<c:if test="${authenticated}">
+				<a class="navbar-text navbar-link">${name }</a>
+			</c:if>
+			<c:if test="${!authenticated}">
 				<a class="navbar-text navbar-link">注册 LISHIBOOK</a>
 				<a class="navbar-text navbar-link">登录</a>
-
+			</c:if>
 			</div>
 		</div>
 	</div>
