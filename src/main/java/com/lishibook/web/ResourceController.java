@@ -11,7 +11,7 @@ import com.lishibook.service.ResourceService;
 
 @Controller
 @RequestMapping("/resource")
-public class ResourceController {
+public class ResourceController extends BaseController{
 	@Autowired
 	private ResourceService resourceService;
 	

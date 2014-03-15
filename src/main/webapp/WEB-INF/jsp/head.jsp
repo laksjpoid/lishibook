@@ -26,7 +26,7 @@
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 			<c:if test="${authenticated}">
-				<a class="navbar-text navbar-link">${name }</a>
+				<a class="navbar-text navbar-link">${username }</a>
 			</c:if>
 			<c:if test="${!authenticated}">
 				<a class="navbar-text navbar-link">注册 LISHIBOOK</a>

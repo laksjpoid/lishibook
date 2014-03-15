@@ -7,7 +7,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,13 +40,12 @@ public class SimpleRealm extends AuthorizingRealm {
 		String password = String.valueOf(userToken.getPassword());
 		
 		User user = userService.getUserByEmail(userName);
-		if(user == null){
-			return null;
+		
+		if(user != null && !password.isEmpty() && password.equals(user.getPassword())){
+			SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userName, password.toCharArray(), getName());
+			return info;
 		}
-		if(password.isEmpty() || !password.equals(user.getPassword())){
-			return null;
-		}
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userName, password.toCharArray(), getName());
-		return info;
+		
+		return null;
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginpage(){
