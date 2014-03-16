@@ -1,11 +1,12 @@
 footer{
-	position: absolute;  
+
 	bottom: 50px; /* ¹Ø¼ü */  
 	height: 60px;
 }
 .lb-margin-top-20{
 	margin-top: 20px;
 }
-.lb-height-50{
+.lb-margin-top-50{
 	margin-top: 50px;
 }
+.wysiwyg-input { width: 400px; height: 250px }

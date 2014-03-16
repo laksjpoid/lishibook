@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.lishibook.entity.User;
+
 @Controller
 @RequestMapping("/")
 public class MainController extends BaseController{
@@ -28,12 +30,9 @@ public class MainController extends BaseController{
 
 		if (currentUser.isAuthenticated()) {
 			//获取 session 内容
-			String email = getSessionEmail(currentUser);
-			String username = getSessionUserName(currentUser);
+			User user = getSessionUser(currentUser);
 			
-			modelView.addObject("authenticated", true);
-			modelView.addObject("email", email);
-			modelView.addObject("username", username);
+			modelView.addObject("user", user);
 		}
 		
 		modelView.setViewName("main");

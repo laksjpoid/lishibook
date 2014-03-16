@@ -11,6 +11,7 @@
 <title>LISHIBOOK</title>
 <link rel="stylesheet" href="/lishibook/bootstrap-3.1.1/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/lishibook/css/lishibook.css" />
+<link rel="stylesheet" href="/lishibook/wysiwyg/jquery.wysiwyg.css" />
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-static-top">
@@ -25,12 +26,12 @@
 				<a class="navbar-brand navbar-link" href="/lishibook/">LISHIBOOK</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
-			<c:if test="${authenticated}">
-				<a class="navbar-text navbar-link">${username }</a>
+			<c:if test="${!empty user}">
+				<a class="navbar-text navbar-link">${user.username }</a>
 			</c:if>
-			<c:if test="${!authenticated}">
+			<c:if test="${empty user}">
 				<a class="navbar-text navbar-link">注册 LISHIBOOK</a>
-				<a class="navbar-text navbar-link">登录</a>
+				<a class="navbar-text navbar-link" href="/lishibook/login">登录</a>
 			</c:if>
 			</div>
 		</div>

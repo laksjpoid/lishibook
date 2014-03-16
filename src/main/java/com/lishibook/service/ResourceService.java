@@ -14,4 +14,9 @@ public class ResourceService {
 	public Resource getResourceByID(int id){
 		return resourceMapper.selectByPrimaryKey(id);
 	}
+	
+	//返回主键
+	public int insert(Resource resource){
+		return resourceMapper.insert(resource);
+	}
 }

@@ -72,8 +72,7 @@ public class LoginController extends BaseController{
 			
 			//在 session 中存储当前用户的用户名和姓名
 			User user = userService.getUserByEmail(username);
-			setSessionEmail(currentUser, username);
-			setSessionUserName(currentUser, user.getUsername());
+			setSessionUser(currentUser, user);
 		} catch(AuthenticationException e){
 			//登录失败
 			modelView.setViewName("login");

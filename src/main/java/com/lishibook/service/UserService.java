@@ -12,11 +12,10 @@ public class UserService {
 	@Autowired
 	private UserMapper userMapper;
 	
-	//创建新用户，如果 email已注册则抛出异常
 	public void register(User user) throws UserExistException{
 		User u = this.getUserByEmail(user.getEmail());
 		if(u != null){
-			throw new UserExistException("User Exist!");
+			throw new UserExistException("User does not exist!");
 		}else{
 			userMapper.insertSelective(user);
 		}
