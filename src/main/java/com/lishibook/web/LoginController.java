@@ -1,9 +1,12 @@
 package com.lishibook.web;
 
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +20,19 @@ import com.lishibook.service.UserService;
 @Controller
 public class LoginController extends BaseController{
 	
+	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+
 	@Autowired
 	private UserService userService;
 	
 	/**
-	 * ÒÑµÇÂ¼Ôò×ªµ½Ö÷Ò³£¬·ñÔòÏÔÊ¾ login Ò³Ãæ
+	 * å·²ç™»å½•åˆ™è½¬åˆ°ä¸»é¡µï¼Œå¦åˆ™æ˜¾ç¤º login é¡µé¢
 	 * @return
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public ModelAndView loginpage(){
+		logger.debug("Enter LoginController.loginpage");
+		
 		ModelAndView modelView = new ModelAndView();
 		modelView.setViewName("login");
 		
@@ -35,57 +42,64 @@ public class LoginController extends BaseController{
 			modelView.setViewName("redirect:/");
 		}
 		
+		logger.debug("Exit LoginController.loginpage");
 		return modelView;
 	}
 	
 	/**
-	 * ÒÑµÇÂ¼Ôò×ªµ½Ö÷Ò³£¬·ñÔòÖ´ĞĞµÇÂ¼£¬µÇÂ¼³É¹¦×ªµ½Ö÷Ò³£¬²»³É¹¦×ªµ½µÇÂ½Ò³²¢ÏÔÊ¾´íÎóÏûÏ¢
+	 * å·²ç™»å½•åˆ™è½¬åˆ°ä¸»é¡µï¼Œå¦åˆ™æ‰§è¡Œç™»å½•ï¼Œç™»å½•æˆåŠŸè½¬åˆ°ä¸»é¡µï¼Œä¸æˆåŠŸè½¬åˆ°ç™»é™†é¡µå¹¶æ˜¾ç¤ºé”™è¯¯æ¶ˆæ¯
 	 * @param username
 	 * @param password
 	 * @return
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public ModelAndView login(@RequestParam("email") String username, @RequestParam("password") String password){
+		logger.debug("Enter LoginController.login");
 		ModelAndView modelView = new ModelAndView();
 		
 		Subject currentUser = SecurityUtils.getSubject();
 		
-		if(currentUser.isAuthenticated()){//ÒÑµÇÂ¼
+		if(currentUser.isAuthenticated()){//å·²ç™»å½•
 			modelView.setViewName("redirect:/");
 			return modelView;
 		}
 		
 		UsernamePasswordToken token;
 		try {
-			//Î´µÇÂ¼£¬Ö´ĞĞµÇÂ¼²Ù×÷
+			//æœªç™»å½•ï¼Œæ‰§è¡Œç™»å½•æ“ä½œ
 			token = new UsernamePasswordToken(username, password);
 			currentUser.login(token);
 			
-			//ÔÚ session ÖĞ´æ´¢µ±Ç°ÓÃ»§µÄÓÃ»§ÃûºÍĞÕÃû
+			//åœ¨ session ä¸­å­˜å‚¨å½“å‰ç”¨æˆ·çš„ç”¨æˆ·åå’Œå§“å
 			User user = userService.getUserByEmail(username);
 			setSessionEmail(currentUser, username);
 			setSessionUserName(currentUser, user.getUsername());
 		} catch(AuthenticationException e){
-			//µÇÂ¼Ê§°Ü
+			//ç™»å½•å¤±è´¥
 			modelView.setViewName("login");
 			modelView.addObject("loginFail", true);
+			
+			logger.debug("Exit LoginController.login");
 			return modelView;
 		}
 		
+		logger.debug("Exit LoginController.login");
 		modelView.setViewName("redirect:/");
 
 		return modelView;
 	}
 	
 	/**
-	 * Ö´ĞĞ×¢Ïú£¬×ªµ½Ö÷Ò³
+	 * æ‰§è¡Œæ³¨é”€ï¼Œè½¬åˆ°ä¸»é¡µ
 	 * @return
 	 */
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(){
+		logger.debug("Enter LoginController.logout");
 		Subject currentUser = SecurityUtils.getSubject();
 		currentUser.logout();
 		
+		logger.debug("Exit LoginController.login");
 		return "redirect:/";
 	}
 }

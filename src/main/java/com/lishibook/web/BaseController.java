@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.lishibook.service.UserService;
 
 /**
- * Õâ¸öÀàÖ÷Òª´¦Àí session µÄget ºÍ set
- * ÈçÔÚµÇÂ¼µÄÊ±ºòĞèÒª´æ´¢µ±Ç°ÓÃ»§µÄÓÃ»§ÃûºÍÃÜÂë·½±ãÒÔºóÊ¹ÓÃ£¬ÓÃ»§Èç¹ûµÇÂ¼¹ıÁËÔòÊ¹ÓÃsession ÖĞµÄÄÚÈİÕ¹Ê¾Ò³ÃæµÈ¡£
+ * è¿™ä¸ªç±»ä¸»è¦å¤„ç† session çš„get å’Œ set
+ * å¦‚åœ¨ç™»å½•çš„æ—¶å€™éœ€è¦å­˜å‚¨å½“å‰ç”¨æˆ·çš„ç”¨æˆ·åå’Œå¯†ç æ–¹ä¾¿ä»¥åä½¿ç”¨ï¼Œç”¨æˆ·å¦‚æœç™»å½•è¿‡äº†åˆ™ä½¿ç”¨session ä¸­çš„å†…å®¹å±•ç¤ºé¡µé¢ç­‰ã€‚
  * @author mengtao
  *
  */
