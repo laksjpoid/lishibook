@@ -87,6 +87,25 @@ public class ResourceController extends BaseController{
 		ModelAndView modelView = new ModelAndView();
 		Subject currentUser = SecurityUtils.getSubject();
 		
+		//只有管理员具有添加资源的权限
+		if (currentUser.isAuthenticated() && currentUser.hasRole("admin")) {
+			User user = getSessionUser(currentUser);
+			modelView.addObject("user", user);
+			
+			Resource resource = new Resource();
+			resource.setName(name);
+			resource.setDescription(description);
+			resource.setContent(content);
+			resource.setCreatorid(user.getId());
+			resource.setLasteditid(user.getId());
+			
+			resourceService.insert(resource);
+			modelView.setViewName("redirect:/resource/" + resource.getId());
+			logger.debug("Exit ResourceController.addResource");
+			return modelView;
+		}
+		
+		modelView.setViewName("redirect:/");
 		logger.debug("Exit ResourceController.addResource");
 		return modelView;
 	}

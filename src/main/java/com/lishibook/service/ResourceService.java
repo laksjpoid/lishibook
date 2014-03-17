@@ -17,6 +17,6 @@ public class ResourceService {
 	
 	//返回主键
 	public int insert(Resource resource){
-		return resourceMapper.insert(resource);
+		return resourceMapper.insertSelective(resource);
 	}
 }
