@@ -11,7 +11,6 @@
 <title>LISHIBOOK</title>
 <link rel="stylesheet" href="/lishibook/bootstrap-3.1.1/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/lishibook/css/lishibook.css" />
-<link rel="stylesheet" href="/lishibook/wysiwyg/jquery.wysiwyg.css" />
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-static-top">

@@ -15,8 +15,12 @@ public class ResourceService {
 		return resourceMapper.selectByPrimaryKey(id);
 	}
 	
-	//返回主键
+	//返回条目数
 	public int insert(Resource resource){
 		return resourceMapper.insertSelective(resource);
+	}
+	
+	public int update(Resource resource){
+		return resourceMapper.updateByPrimaryKeySelective(resource);
 	}
 }

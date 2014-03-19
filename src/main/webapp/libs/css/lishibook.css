@@ -1,5 +1,4 @@
 footer{
-
 	bottom: 50px; /* ¹Ø¼ü */  
 	height: 60px;
 }
@@ -9,4 +8,6 @@ footer{
 .lb-margin-top-50{
 	margin-top: 50px;
 }
-.wysiwyg-input { width: 400px; height: 250px }
+textarea.size-fixed{
+	resize: none;
+}

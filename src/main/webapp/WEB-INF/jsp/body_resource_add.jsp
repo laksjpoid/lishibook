@@ -14,11 +14,11 @@
 				</div>
 				<div class="form-group">
 					<label for="exampleInputEmail1">描述</label> <textarea type="text"
-						class="form-control" id="description" name="description" rows=2></textarea>
+						class="form-control size-fixed" id="description" name="description" rows=2 resize=none></textarea>
 				</div>
 				<div class="form-group">
 					<label>内容</label>
-					<textarea id="content" name="content"></textarea>
+					<textarea id="content" name="content" class=""></textarea>
 				</div>
 				
 				<button type="submit" class="btn btn-default">添加资源</button>
