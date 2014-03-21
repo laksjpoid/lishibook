@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lishibook.entity.Resource;
 import com.lishibook.entity.User;
+import com.lishibook.exception.NoSuchPageException;
+import com.lishibook.exception.PermissionException;
 import com.lishibook.service.ResourceService;
 
 @Controller
@@ -32,26 +34,17 @@ public class ResourceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/{resourceId}")
-	public ModelAndView showResource(@PathVariable("resourceId") int resourceid) {
+	public ModelAndView showResource(@PathVariable("resourceId") int resourceid) throws NoSuchPageException{
 
 		logger.debug("Enter ResourceController.showResource");
 
 		ModelAndView modelView = new ModelAndView();
-		Subject currentUser = SecurityUtils.getSubject();
-
-		if (currentUser.isAuthenticated()) {
-			// 获取 session 内容
-			User user = getSessionUser(currentUser);
-
-			modelView.addObject("user", user);
-		}
 
 		modelView.setViewName("resource");
 		Resource resource = resourceService.getResourceByID(resourceid);
-		
-		if(resource == null){
-			modelView.setViewName("404");
-			return modelView;
+
+		if (resource == null) {
+			throw new NoSuchPageException();
 		}
 		modelView.addObject("resource", resource);
 
@@ -60,24 +53,16 @@ public class ResourceController extends BaseController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView addResourcePage() {
+	public ModelAndView addResourcePage() throws PermissionException {
 		logger.debug("Enter ResourceController.addResourcePage");
 
 		ModelAndView modelView = new ModelAndView();
 		Subject currentUser = SecurityUtils.getSubject();
 
-		if (currentUser.isAuthenticated()) {
-			User user = getSessionUser(currentUser);
-			modelView.addObject("user", user);
-			
-			if (currentUser.hasRole("admin")) {
-				modelView.setViewName("add_resource");
-				return modelView;
-			}
+		if (!currentUser.hasRole("admin")) {
+			throw new PermissionException();
 		}
-
-		modelView.setViewName("404");
-
+		modelView.setViewName("add_resource");
 		logger.debug("Exit ResourceController.addResourcePage");
 		return modelView;
 	}
@@ -91,38 +76,31 @@ public class ResourceController extends BaseController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView addResource(@RequestParam("name") String name,
 			@RequestParam("description") String description,
-			@RequestParam("content") String content) {
+			@RequestParam("content") String content) throws PermissionException {
 
 		logger.debug("Enter ResourceController.addResource");
 		ModelAndView modelView = new ModelAndView();
 		Subject currentUser = SecurityUtils.getSubject();
 
 		// 只有管理员具有添加资源的权限
-		if (currentUser.isAuthenticated()) {
-			User user = getSessionUser(currentUser);
-			modelView.addObject("user", user);
-			if (currentUser.hasRole("admin")) {
-				Resource resource = new Resource();
-				resource.setName(name);
-				resource.setDescription(description);
-				resource.setContent(content);
-				resource.setCreatorid(user.getId());
-				resource.setLasteditid(user.getId());
-
-				resourceService.insert(resource);
-				modelView.setViewName("redirect:/resource/" + resource.getId());
-				logger.debug("Exit ResourceController.addResource");
-				return modelView;
-			}
-
-			modelView.setViewName("404");
-			logger.debug("Exit ResourceController.addResource");
-			return modelView;
+		if (!currentUser.hasRole("admin")) {
+			throw new PermissionException();
 		}
 
-		modelView.setViewName("redirect:/");
+		Resource resource = new Resource();
+		resource.setName(name);
+		resource.setDescription(description);
+		resource.setContent(content);
+
+		User user = getSessionUser(currentUser);
+		resource.setCreatorid(user.getId());
+		resource.setLasteditid(user.getId());
+
+		resourceService.insert(resource);
+		modelView.setViewName("redirect:/resource/" + resource.getId());
 		logger.debug("Exit ResourceController.addResource");
 		return modelView;
+		
 	}
 
 	/**
@@ -133,32 +111,24 @@ public class ResourceController extends BaseController {
 	 */
 	@RequestMapping(value = "/edit/{resourceId}", method = RequestMethod.GET)
 	public ModelAndView editResourcePage(
-			@PathVariable("resourceId") int resourceid) {
+			@PathVariable("resourceId") int resourceid) throws PermissionException{
 
 		logger.debug("Enter ResourceController.editResourcePage");
 		ModelAndView modelView = new ModelAndView();
 		Subject currentUser = SecurityUtils.getSubject();
 
-		if (currentUser.isAuthenticated()) {
-			User user = getSessionUser(currentUser);
-			modelView.addObject("user", user);
-
-			if (currentUser.hasRole("admin")) {
-				Resource resource = resourceService.getResourceByID(resourceid);
-				
-				if(resource == null){
-					modelView.setViewName("404");
-					return modelView;
-				}
-				modelView.addObject("resource", resource);
-				modelView.setViewName("edit_resource");
-				
-				logger.debug("Exit ResourceController.editResourcePage");
-				return modelView;
-			}
+		if (!currentUser.hasRole("admin")) {
+			throw new PermissionException();
 		}
 
-		modelView.setViewName("404");
+		Resource resource = resourceService.getResourceByID(resourceid);
+
+		if (resource == null) {
+			modelView.setViewName("404");
+			return modelView;
+		}
+		modelView.addObject("resource", resource);
+		modelView.setViewName("edit_resource");
 
 		logger.debug("Exit ResourceController.editResourcePage");
 		return modelView;
@@ -175,33 +145,27 @@ public class ResourceController extends BaseController {
 			@PathVariable("resourceId") int resourceid,
 			@RequestParam("name") String name,
 			@RequestParam("description") String description,
-			@RequestParam("content") String content) {
+			@RequestParam("content") String content) throws PermissionException{
 
 		logger.debug("Enter ResourceController.editResource");
 		ModelAndView modelView = new ModelAndView();
 		Subject currentUser = SecurityUtils.getSubject();
 
 		// 只有管理员具有添加资源的权限
-		if (currentUser.isAuthenticated()) {
-			User user = getSessionUser(currentUser);
-			modelView.addObject("user", user);
-
-			if (currentUser.hasRole("admin")) {
-				Resource resource = resourceService.getResourceByID(resourceid);
-				resource.setName(name);
-				resource.setDescription(description);
-				resource.setContent(content);
-				resource.setLasteditid(user.getId());
-
-				resourceService.update(resource);
-				modelView.setViewName("redirect:/resource/" + resource.getId());
-				logger.debug("Exit ResourceController.editResource");
-				return modelView;
-			}
+		if (!currentUser.hasRole("admin")) {
+			throw new PermissionException();
 		}
+		
+		Resource resource = resourceService.getResourceByID(resourceid);
+		resource.setName(name);
+		resource.setDescription(description);
+		resource.setContent(content);
 
-		modelView.setViewName("404");
+		User user = getSessionUser(currentUser);
+		resource.setLasteditid(user.getId());
 
+		resourceService.update(resource);
+		modelView.setViewName("redirect:/resource/" + resource.getId());
 		logger.debug("Exit ResourceController.editResource");
 		return modelView;
 	}

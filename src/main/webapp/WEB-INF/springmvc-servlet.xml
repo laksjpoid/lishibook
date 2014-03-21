@@ -28,4 +28,18 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
 		p:prefix="/WEB-INF/jsp/" 
 		p:suffix=".jsp" />
+		
+	<bean id="handlerExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="com.lishibook.exception.NoSuchPageException">404</prop>
+				<prop key="com.lishibook.exception.PermissionException">404</prop>
+			</props>
+		</property>
+		<property name="statusCodes">    
+             <props>    
+                 <prop key="404">404</prop>
+             </props>    
+         </property>    
+	</bean>
 </beans>
