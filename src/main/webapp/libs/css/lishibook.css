@@ -1,6 +1,6 @@
 footer{
 	bottom: 50px; /* ¹Ø¼ü */  
-	height: 60px;
+	height: 90px;
 }
 .lb-margin-top-20{
 	margin-top: 20px;
@@ -10,4 +10,7 @@ footer{
 }
 textarea.size-fixed{
 	resize: none;
+}
+.lb-screen-height{
+	min-height: 700px;
 }

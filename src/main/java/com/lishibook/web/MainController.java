@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.lishibook.entity.User;
 
 @Controller
-@RequestMapping("/")
 public class MainController extends BaseController{
 	
 	private static Logger logger = LoggerFactory.getLogger(MainController.class);
@@ -21,7 +20,7 @@ public class MainController extends BaseController{
 	 * 注意，已登录时显示主页内容需要显示用户相关信息，在任何页面都是如此
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView main() {
 		logger.debug("Enter MainController.main");
 		
@@ -38,6 +37,17 @@ public class MainController extends BaseController{
 		modelView.setViewName("main");
 		
 		logger.debug("Exit MainController.main");
+		return modelView;
+	}
+	
+	@RequestMapping(value="/404", method = RequestMethod.GET)
+	public ModelAndView errorpage(){
+		logger.debug("Enter MainController.errorpage");
+		ModelAndView modelView = new ModelAndView();
+		
+		modelView.setViewName("404");
+
+		logger.debug("Exit MainController.errorpage");
 		return modelView;
 	}
 }

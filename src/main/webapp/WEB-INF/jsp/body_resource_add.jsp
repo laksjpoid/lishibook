@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<div class="row">
+<div class="row lb-screen-height">
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">

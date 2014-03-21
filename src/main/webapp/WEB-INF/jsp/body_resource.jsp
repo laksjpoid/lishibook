@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
-<div class="row">
+<div class="row lb-screen-height">
 	<div class="col-md-8">
 		<h2>${resource.name }</h2>
 		<div>${resource.content }</div>
