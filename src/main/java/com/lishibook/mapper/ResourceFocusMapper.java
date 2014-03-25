@@ -1,5 +1,8 @@
 package com.lishibook.mapper;
 
+import java.util.List;
+
+import com.lishibook.entity.Resource;
 import com.lishibook.entity.ResourceFocus;
 
 public interface ResourceFocusMapper {
@@ -50,4 +53,6 @@ public interface ResourceFocusMapper {
      * @mbggenerated Mon Mar 03 21:09:16 CST 2014
      */
     int updateByPrimaryKey(ResourceFocus record);
+    
+    List<Resource> selectFocuses(Integer id);
 }

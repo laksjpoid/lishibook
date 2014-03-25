@@ -16,9 +16,9 @@ import com.lishibook.utils.EncryptUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/applicationContext.xml"})
-public class TestUserService {
+public class UserServiceTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(TestUserService.class);
+	private static Logger logger = LoggerFactory.getLogger(UserServiceTest.class);
 	
 	@Autowired
 	private UserService userService;

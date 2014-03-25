@@ -10,7 +10,7 @@ import com.lishibook.service.ResourceService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/applicationContext.xml"})
-public class TestResourceService {
+public class ResourceServiceTest {
 	@Autowired
 	private ResourceService resourceService;
 	

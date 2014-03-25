@@ -14,6 +14,16 @@
     <result column="desc" property="desc" jdbcType="VARCHAR" />
     <result column="time" property="time" jdbcType="TIMESTAMP" />
   </resultMap>
+  <resultMap id="ResourceMap" type="com.lishibook.entity.Resource" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="creatorid" property="creatorid" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="lasteditid" property="lasteditid" jdbcType="INTEGER" />
+    <result column="lastedittime" property="lastedittime" jdbcType="TIMESTAMP" />
+    <result column="views" property="views" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Base_Column_List" >
     <!--
       WARNING - @mbggenerated
@@ -32,6 +42,12 @@
     <include refid="Base_Column_List" />
     from resource_focus
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectFocuses" resultMap="ResourceMap" parameterType="java.lang.Integer" >
+    select 
+    R.id as id, name, description, views
+    from resource R join resource_focus RF on R.id = RF.torid 
+    where fromrid= #{fromrid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     <!--

@@ -16,6 +16,7 @@ import com.lishibook.entity.Resource;
 import com.lishibook.entity.User;
 import com.lishibook.exception.NoSuchPageException;
 import com.lishibook.exception.PermissionException;
+import com.lishibook.service.ResourceFocusService;
 import com.lishibook.service.ResourceService;
 
 @Controller
@@ -28,6 +29,8 @@ public class ResourceController extends BaseController {
 	@Autowired
 	private ResourceService resourceService;
 
+	@Autowired
+	private ResourceFocusService resourceFocusService;
 	/**
 	 * 
 	 * @param resourceid
