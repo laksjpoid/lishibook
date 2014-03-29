@@ -49,6 +49,7 @@
 							<div class="form-group">
 								<label for="name" class="">资源名字</label> <input type="text"
 									class="form-control" id="name" name="name">
+								<label><a>上传头像</a></label>
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">描述</label>

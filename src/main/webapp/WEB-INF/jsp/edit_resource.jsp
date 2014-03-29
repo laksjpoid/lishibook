@@ -14,6 +14,7 @@
 <link rel="stylesheet"
 	href="/lishibook/bootstrap-3.1.1/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/lishibook/css/lishibook.css" />
+<link rel="stylesheet" href="/lishibook/uploadify/uploadify.css" />
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-static-top">
@@ -43,13 +44,15 @@
 			<div class="row">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
-					<h3>新增資源</h3>
+					<h3>编辑資源</h3>
 					<div>
 						<form action="${resource.id }" method=post>
 							<div class="form-group">
-								<label for="name" class="">资源名字</label> <input type="text"
+								<label for="name" class="">资源名字</label> 
+								<input type="text"
 									class="form-control" id="name" name="name"
 									value="${resource.name }">
+								<div></div><input id="file_upload" type="file" name="file_upload" /></div>
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">描述</label>
@@ -78,10 +81,23 @@
 	<script src="/lishibook/js/jquery.md5.js"></script>
 	<script src="/lishibook/bootstrap-3.1.1/js/bootstrap.min.js"></script>
 	<script src="/lishibook/tinymce/tinymce.min.js"></script>
+	<script src="/lishibook/uploadify/jquery.uploadify.js"></script>
 	<script type="text/javascript">
 		$(document)
 				.ready(
 						function() {
+							$('#file_upload').uploadify({
+								'auto' : false, 
+								'buttonText' : '上传头像',
+								'cancelImg': '/lshibook/uploadify/uploadify-cancel.png',
+								'fileSizeLimit' : '1MB',
+								'multi'    : false,
+								'fileTypeDesc': '',
+						        'swf'      : '/lishibook/uploadify/uploadify.swf',
+						        'uploader' : '/lishibook/upload',
+						        'uploadLimit' : '1',
+						        // Put your options here
+						    }); 
 							tinymce
 									.init({
 										selector : "textarea#content",
@@ -90,7 +106,7 @@
 										menubar : "",
 										toolbar : "undo redo bold italic alignleft aligncenter alignright alignjustify bullist numlist outdent indent link image forecolor backcolor",
 										statusbar : false,
-									});
+							});
 						});
 	</script>
 </body>
