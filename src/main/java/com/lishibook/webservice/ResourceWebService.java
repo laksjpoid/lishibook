@@ -1,4 +1,4 @@
-package com.lishibook.restservice;
+package com.lishibook.webservice;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ import com.lishibook.service.ResourceService;
 import com.lishibook.web.BaseController;
 
 @Controller
-@RequestMapping("/rs/resource")
-public class ResourceRestService extends BaseController {
+@RequestMapping("/ws/resource")
+public class ResourceWebService extends BaseController {
 
 	private static Logger logger = LoggerFactory
-			.getLogger(ResourceRestService.class);
+			.getLogger(ResourceWebService.class);
 
 	@Autowired
 	private ResourceService resourceService;

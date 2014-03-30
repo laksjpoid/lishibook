@@ -14,6 +14,7 @@ import com.lishibook.service.UserService;
  */
 public class BaseController {
 	
+	protected static final String SESSION_ID = "sessionId";
 	protected static final String SESSION_USER = "user";
 	
 	@Autowired

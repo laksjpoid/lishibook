@@ -36,7 +36,7 @@
 		<property name="mapperLocations" value="classpath*:com/lishibook/mapper/*.xml" />
 	</bean>
 
-	<!-- mybatis 的 mapper 注入配置-->
+	<!-- mybatis 的 mapper 注入配置 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.lishibook.mapper" />
 	</bean>
@@ -49,12 +49,13 @@
 			this line to use shiro's native sessions (see the JavaDoc for more): -->
 		<!-- <property name="sessionMode" value="native"/> -->
 	</bean>
-	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/user/login"/> 
-		<property name="successUrl" value="/"/> 
-		<property name="unauthorizedUrl" value="/user/login"/>
+		<property name="loginUrl" value="/user/login" />
+		<property name="successUrl" value="/" />
+		<property name="unauthorizedUrl" value="/user/login" />
 		<property name="filterChainDefinitions">
 			<value>
 				/** = anon
