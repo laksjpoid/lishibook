@@ -14,6 +14,7 @@
 <link rel="stylesheet"
 	href="/lishibook/bootstrap-3.1.1/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/lishibook/css/lishibook.css" />
+<link rel="stylesheet" href="/lishibook/upload/css/jquery.fileupload.css" />
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-static-top">
@@ -50,10 +51,13 @@
 								<label for="name" class="">资源名字</label> <input type="text"
 									class="form-control" id="name" name="name"
 									value="${resource.name }">
-								<div>
-									<input id="fileupload" type="file" name="fileupload" />
-								</div>
 							</div>
+							<span class="btn btn-success fileinput-button">
+								<span>头像上传</span>
+								<input type="file" id="fileupload" name="fileupload">
+							</span>
+            				<div id="files" class="files"></div>
+            				<div id="preview" class="preview"></div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">描述</label>
 								<textarea type="text" class="form-control size-fixed"
@@ -85,32 +89,38 @@
 	<script src="/lishibook/upload/js/jquery.iframe-transport.js"></script>
 	<script src="/lishibook/upload/js/jquery.fileupload.js"></script>
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							tinymce
-									.init({
-										selector : "textarea#content",
-										theme : "modern",
-										height : 300,
-										menubar : "",
-										toolbar : "undo redo bold italic alignleft aligncenter alignright alignjustify bullist numlist outdent indent link image forecolor backcolor",
-										statusbar : false,
-									});
-							$('#fileupload').fileupload({
-						        url: '/lishibook/ws/upload',
-						        type:'POST',
-						        dataType: 'json',
-						        limitMultiFileUploads: 1,
-						        limitMultiFileUploadSize: 1000000,
-						        imageCrop: true,
-						        done: function (e, data) {
-						            $.each(data.result.files, function (index, file) {
-						                $('<p/>').text(file.name).appendTo(document.body);
-						            });
-						        }
-						    });
+		$(document).ready(
+			function() {
+				tinymce.init({
+					selector : "textarea#content",
+					theme : "modern",
+					height : 300,
+					menubar : "",
+					toolbar : "undo redo bold italic alignleft aligncenter alignright alignjustify bullist numlist outdent indent link image forecolor backcolor",
+					statusbar : false,
+				});
+				$('#fileupload').fileupload({
+					url : '/lishibook/ws/upload',
+					type : 'POST',
+					dataType : 'json',
+					autoUpload: true,
+					maxNumberOfFiles : 1,
+					maxFileSize : 1000000,
+					acceptFileTypes : /(\.|\/)(gif|jpe?g|png)$/i,
+					fileInput: $('input:file'),
+					add: function (e, data) {
+						$.each(data.files, function (index, file) {
+							$('<p/>').text(file.name).appendTo('#files');
+						}); 
+						data.submit();
+					},
+					done : function(e, data) {
+						$.each(data.result.files,function(index,file) {
+							$('<p/>').text(file.name).appendTo('#files');
 						});
+					}
+				});
+			});
 	</script>
 </body>
 </html>

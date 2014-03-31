@@ -1,9 +1,13 @@
 package com.lishibook.webservice;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -25,6 +29,9 @@ import com.lishibook.web.BaseController;
 @Controller
 @RequestMapping("/ws")
 public class UploadWebService  extends BaseController{
+	
+	public static String PICTURE_DIR = "D:\\Workspaces\\lishibook\\lishibook\\src\\main\\webapp\\pictures\\";
+	
 	private static Logger logger = LoggerFactory
 			.getLogger(UploadWebService.class);
 	
@@ -42,6 +49,28 @@ public class UploadWebService  extends BaseController{
 		
 		List<SuccessOutput> list = new ArrayList<SuccessOutput>();
 		SuccessOutput output = new SuccessOutput();
+
+		String path = PICTURE_DIR + getDirName();
+		File pathFile = new File(path);
+		if(!pathFile.exists() || !pathFile.isDirectory()){
+			pathFile.mkdirs();
+		}
+		
+		//生成文件名
+		String fileName = getPath(file.getOriginalFilename());
+		
+		File f = new File(path + "\\" + fileName);
+		while(f.exists()){
+			fileName = getPath(file.getOriginalFilename());
+			f = new File(path + "\\" + fileName);
+		}
+		
+		//写入文件
+		byte[] buff=file.getBytes();
+        FileOutputStream out=new FileOutputStream(f);
+        out.write(buff,0,buff.length);  
+		out.flush();
+		out.close();
 		
 		output.setName(file.getOriginalFilename());
 		output.setSize(file.getSize());
@@ -51,5 +80,36 @@ public class UploadWebService  extends BaseController{
 		result.setFiles(list);
 		
 		return result;
+	}
+	
+	//生成一个文件名
+	private String getPath(String originalName){
+		//文件名的第一部分：时间戳
+		long part1 = new Date().getTime();
+		
+		//第二部分：随机数
+		Random r = new Random();
+		int part2 = r.nextInt(100000);
+		
+		String[] temp = originalName.split("\\.");
+		String suffix = temp[temp.length-1];
+		
+		return part1 + "" + part2 + "" + "." + suffix;
+	}
+	
+	//生成一个日期字符串，用作目录名字
+	private String getDirName(){
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH) + 1;
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		
+		return String.format("%04d%02d%02d", year, month, day);
+	}
+	
+	public static void main(String[] args){
+		String a = "a.jpg";
+		System.out.println(new UploadWebService().getPath(a));
+		System.out.println(new UploadWebService().getDirName());
 	}
 }
