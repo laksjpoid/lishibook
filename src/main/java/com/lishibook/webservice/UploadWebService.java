@@ -1,13 +1,16 @@
 package com.lishibook.webservice;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -50,7 +53,8 @@ public class UploadWebService  extends BaseController{
 		List<SuccessOutput> list = new ArrayList<SuccessOutput>();
 		SuccessOutput output = new SuccessOutput();
 
-		String path = PICTURE_DIR + getDirName();
+		String dirName = getDirName();
+		String path = PICTURE_DIR + dirName;
 		File pathFile = new File(path);
 		if(!pathFile.exists() || !pathFile.isDirectory()){
 			pathFile.mkdirs();
@@ -66,15 +70,36 @@ public class UploadWebService  extends BaseController{
 		}
 		
 		//写入文件
-		byte[] buff=file.getBytes();
-        FileOutputStream out=new FileOutputStream(f);
-        out.write(buff,0,buff.length);  
-		out.flush();
-		out.close();
+		InputStream input = file.getInputStream();
+		BufferedImage srcImage = ImageIO.read(input);
+		int originWidth = srcImage.getWidth();
+		int originHeight = srcImage.getHeight();
+		
+		int destWidth = 100;
+		int destHeight = 100;//默认高度为 100 px
+		
+		//处理并保存图片
+		if((originHeight < destHeight) && (originWidth < destWidth)){
+			//原图长宽都小于 100px，则维持不变
+			destWidth = originWidth;
+			destHeight = originHeight;
+		}else if(originHeight > originWidth){
+			//高度为 100，宽度比100 小
+			destWidth = originWidth*destHeight/originHeight;
+		}else{
+			//宽度为100， 高度比100小
+			destHeight = originHeight*destWidth/originWidth;
+		}
+		BufferedImage destImage = new BufferedImage(destWidth, destHeight, BufferedImage.TYPE_INT_RGB);
+		destImage.getGraphics().drawImage(srcImage, 0, 0, destWidth, destHeight, null);
+		ImageIO.write(destImage, "png", f);
 		
 		output.setName(file.getOriginalFilename());
 		output.setSize(file.getSize());
-		output.setUrl("/lishibook/pictures/zhugeliang.jpg");
+		
+		String url = "/lishibook/pictures/" + dirName + "/" + fileName;
+		output.setUrl(url);
+		output.setThumbnailUrl(url);
 		
 		list.add(output);
 		result.setFiles(list);
