@@ -56,7 +56,10 @@
 								<span>头像上传</span>
 								<input type="file" id="fileupload" name="fileupload">
 							</span>
-            				<div id="files" class="files"></div>
+							<input type="hidden" id="iconurl" name="iconurl">
+							<c:if test="${!empty resource.iconurl}">
+            					<div id="files" class="files"><img src="${resource.iconurl }"/></div>
+            				</c:if>
             				<div id="preview" class="preview"></div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">描述</label>
@@ -82,7 +85,6 @@
 		</footer>
 	</div>
 	<script src="/lishibook/js/jquery-2.1.0.js"></script>
-	<script src="/lishibook/js/jquery.md5.js"></script>
 	<script src="/lishibook/bootstrap-3.1.1/js/bootstrap.min.js"></script>
 	<script src="/lishibook/tinymce/tinymce.min.js"></script>
 	<script src="/lishibook/upload/js/vendor/jquery.ui.widget.js"></script>
@@ -109,14 +111,12 @@
 					acceptFileTypes : /(\.|\/)(gif|jpe?g|png)$/i,
 					fileInput: $('input:file'),
 					add: function (e, data) {
-						$.each(data.files, function (index, file) {
-							$('<p/>').text(file.name).appendTo('#files');
-						}); 
 						data.submit();
 					},
 					done : function(e, data) {
 						$.each(data.result.files,function(index,file) {
-							$('<p/>').text(file.name).appendTo('#files');
+							$('<img/>', {src:file.url}).appendTo('#files');
+							$('#iconurl').val(file.url);
 						});
 					}
 				});

@@ -39,7 +39,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<h2><img src="/lishibook/pictures/zhugeliang.jpg" class="lb-icon"> ${resource.name }</h2>
+		<h2><img src="${resource.iconurl }" class="lb-icon"> ${resource.name }</h2>
 		<hr />
 		<div class="row lb-screen-height">
 			<div class="col-md-8">

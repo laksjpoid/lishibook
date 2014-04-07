@@ -15,5 +15,6 @@ textarea.size-fixed{
 	min-height: 700px;
 }
 .lb-icon{
-	height: 66px;
+	max-height: 60px;
+	max-width: 60px;
 }

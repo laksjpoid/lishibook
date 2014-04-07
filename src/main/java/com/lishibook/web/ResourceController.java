@@ -147,6 +147,7 @@ public class ResourceController extends BaseController {
 	public ModelAndView editResource(
 			@PathVariable("resourceId") int resourceid,
 			@RequestParam("name") String name,
+			@RequestParam("iconurl") String iconurl,
 			@RequestParam("description") String description,
 			@RequestParam("content") String content) throws PermissionException{
 
@@ -161,6 +162,7 @@ public class ResourceController extends BaseController {
 		
 		Resource resource = resourceService.getResourceByID(resourceid);
 		resource.setName(name);
+		resource.setIconurl(iconurl);
 		resource.setDescription(description);
 		resource.setContent(content);
 
