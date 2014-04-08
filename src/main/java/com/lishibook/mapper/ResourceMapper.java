@@ -1,5 +1,7 @@
 package com.lishibook.mapper;
 
+import java.util.List;
+
 import com.lishibook.entity.Resource;
 
 public interface ResourceMapper {
@@ -58,4 +60,6 @@ public interface ResourceMapper {
      * @mbggenerated Mon Mar 03 21:09:16 CST 2014
      */
     int updateByPrimaryKey(Resource record);
+    
+    List<Resource> search(String key);
 }

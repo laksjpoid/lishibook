@@ -45,7 +45,7 @@
 			<div class="col-md-8">
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="#">基本资料</a></li>
-					<li><a href="#">生命线</a></li>
+					<li><a href="#">时间轴</a></li>
 				</ul>
 				<div>${resource.content }</div>
 			</div>
@@ -53,23 +53,24 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">${resource.name } 的关注</div>
 					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-4">
-								<a href="#" class="thumbnail"> <img
-									src="/lishibook/pictures/index.png" alt="刘备">
-								</a>
-							</div>
-							<div class="col-md-4">
-								<a href="#" class="thumbnail"> <img
-									src="/lishibook/pictures/index.png" alt="...">
-								</a>
-							</div>
-							<div class="col-md-4">
-								<a href="#" class="thumbnail"> <img
-									src="/lishibook/pictures/index.png" alt="...">
-								</a>
-							</div>
-						</div>
+						<ul class="media-list">
+							<li class="media lb-focus"><a class="pull-left" href="#"> <img
+									class="media-object lb-focus-icon" src="${resource.iconurl }"
+									alt="...">
+							</a>
+								<div class="media-body">
+									<h4 class="media-heading">${resource.name }</h4>
+									章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天
+								</div></li>
+							<li class="media lb-focus"><a class="pull-left" href="#"> <img
+									class="media-object lb-focus-icon" src="${resource.iconurl }"
+									alt="...">
+							</a>
+								<div class="media-body focus">
+									<h4 class="media-heading">${resource.name }</h4>
+									章泽天
+								</div></li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -86,6 +87,9 @@
 			$("form").submit(function() {
 				var md5 = $.md5($("#password").val());
 				$("#hiddenpassword").val(md5);
+			});
+			$("li.lb-focus").hover(function(){
+				$(this).toggleClass("lb-focus-hover");
 			});
 		});
 	</script>

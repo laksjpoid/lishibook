@@ -54,6 +54,12 @@
     from resource
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="search" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource
+    where name like CONCAT('%',#{key,jdbcType=VARCHAR},'%')
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated

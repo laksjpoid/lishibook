@@ -1,5 +1,7 @@
 package com.lishibook.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,9 @@ public class ResourceService {
 	
 	public int update(Resource resource){
 		return resourceMapper.updateByPrimaryKeySelective(resource);
+	}
+	
+	public List<Resource> search(String key){
+		return resourceMapper.search(key);
 	}
 }

@@ -53,13 +53,15 @@
 									value="${resource.name }">
 							</div>
 							<span class="btn btn-success fileinput-button">
-								<span>头像上传</span>
+								<span>修改头像</span>
 								<input type="file" id="fileupload" name="fileupload">
 							</span>
-							<input type="hidden" id="iconurl" name="iconurl">
-							<c:if test="${!empty resource.iconurl}">
-            					<div id="files" class="files"><img src="${resource.iconurl }"/></div>
-            				</c:if>
+							<input type="hidden" id="iconurl" name="iconurl" value="${resource.iconurl }">
+							<div id="files" class="files">
+								<c:if test="${!empty resource.iconurl}">
+									<img src="${resource.iconurl }"/>
+								</c:if>
+							</div>
             				<div id="preview" class="preview"></div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">描述</label>
@@ -115,6 +117,7 @@
 					},
 					done : function(e, data) {
 						$.each(data.result.files,function(index,file) {
+							$('#files').html("");
 							$('<img/>', {src:file.url}).appendTo('#files');
 							$('#iconurl').val(file.url);
 						});

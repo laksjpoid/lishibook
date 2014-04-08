@@ -1,5 +1,8 @@
 package com.lishibook.webservice;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -20,6 +23,7 @@ import com.lishibook.exception.PermissionException;
 import com.lishibook.output.BaseResult;
 import com.lishibook.service.ResourceFocusService;
 import com.lishibook.service.ResourceService;
+import com.lishibook.utils.EncryptUtils;
 import com.lishibook.web.BaseController;
 
 @Controller
@@ -122,5 +126,15 @@ public class ResourceWebService extends BaseController {
 		
 		logger.debug("Exit ResourceRestService.removefocus");
 		return result;
+	}
+	
+	@RequestMapping(value = "/search/{key}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Resource> search(@PathVariable("key")String key) throws PermissionException{
+		String urlKey;
+		
+		urlKey = EncryptUtils.convertURIParam(key);
+		return resourceService.search(urlKey);
+		
 	}
 }

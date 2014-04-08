@@ -78,6 +78,7 @@ public class ResourceController extends BaseController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView addResource(@RequestParam("name") String name,
+			@RequestParam("iconurl") String iconurl,
 			@RequestParam("description") String description,
 			@RequestParam("content") String content) throws PermissionException {
 
@@ -92,6 +93,7 @@ public class ResourceController extends BaseController {
 
 		Resource resource = new Resource();
 		resource.setName(name);
+		resource.setIconurl(iconurl);
 		resource.setDescription(description);
 		resource.setContent(content);
 
