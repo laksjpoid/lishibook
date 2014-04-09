@@ -1,8 +1,6 @@
 package com.lishibook.webservice;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -19,11 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lishibook.entity.Resource;
 import com.lishibook.entity.ResourceFocus;
+import com.lishibook.exception.InternalException;
 import com.lishibook.exception.PermissionException;
 import com.lishibook.output.BaseResult;
 import com.lishibook.service.ResourceFocusService;
 import com.lishibook.service.ResourceService;
-import com.lishibook.utils.EncryptUtils;
 import com.lishibook.web.BaseController;
 
 @Controller
@@ -128,13 +126,15 @@ public class ResourceWebService extends BaseController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/search/{key}", method = RequestMethod.GET)
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Resource> search(@PathVariable("key")String key) throws PermissionException{
-		String urlKey;
+	public List<Resource> search(@RequestParam("key")String key) throws InternalException{
 		
-		urlKey = EncryptUtils.convertURIParam(key);
-		return resourceService.search(urlKey);
-		
+		try {
+			String urlKey = new String(key.getBytes("ISO-8859-1"),"UTF-8");
+			return resourceService.search(urlKey);
+		} catch (UnsupportedEncodingException e) {
+			throw new InternalException();
+		}
 	}
 }

@@ -17,6 +17,7 @@
   <resultMap id="ResourceMap" type="com.lishibook.entity.Resource" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="iconurl" property="iconurl" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="creatorid" property="creatorid" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
@@ -45,7 +46,7 @@
   </select>
   <select id="selectFocuses" resultMap="ResourceMap" parameterType="java.lang.Integer" >
     select 
-    R.id as id, name, description, views
+    R.id as id, iconurl, name, description, views
     from resource R join resource_focus RF on R.id = RF.torid 
     where fromrid= #{fromrid,jdbcType=INTEGER}
   </select>

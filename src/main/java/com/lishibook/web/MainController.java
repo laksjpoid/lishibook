@@ -21,4 +21,9 @@ public class MainController extends BaseController{
 	public String errorpage(){
 		return "404";
 	}
+	
+	@RequestMapping(value="/500", method = RequestMethod.GET)
+	public String internalerrorpage(){
+		return "500";
+	}
 }
