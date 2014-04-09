@@ -53,24 +53,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">${resource.name } 的关注</div>
 					<div class="panel-body">
-						<ul class="media-list">
-							<li class="media lb-focus"><a class="pull-left" href="#"> <img
-									class="media-object lb-focus-icon" src="${resource.iconurl }"
-									alt="...">
-							</a>
-								<div class="media-body">
-									<h4 class="media-heading">${resource.name }</h4>
-									章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天章泽天
-								</div></li>
-							<li class="media lb-focus"><a class="pull-left" href="#"> <img
-									class="media-object lb-focus-icon" src="${resource.iconurl }"
-									alt="...">
-							</a>
-								<div class="media-body focus">
-									<h4 class="media-heading">${resource.name }</h4>
-									章泽天
-								</div></li>
-						</ul>
+						<ul class="media-list"></ul>
 					</div>
 				</div>
 			</div>
@@ -90,6 +73,30 @@
 			});
 			$("li.lb-focus").hover(function(){
 				$(this).toggleClass("lb-focus-hover");
+			});
+			$.get("/lishibook/ws/resource/${resource.id }/focuses",function(data){
+				for(var i in data){
+					node = data[i];
+					var li = $("<li class='media lb-focus'/>");
+					var a = $("<a class='pull-left'/>");
+					a.attr("href", "/lishibook/resource/"+node.id);
+					var img = $("<img/>", 
+								{
+								class: "media-object lb-focus-icon",
+								src: node.iconurl
+								});
+					img.appendTo(a);
+					
+					var mediabody = $("<div class='media-body'/>");
+					var mediaheading = $("<h4 class='media-heading'/>");
+					mediaheading.html(node.name);
+					mediaheading.appendTo(mediabody);
+					mediabody.append(node.description);
+					li.append(a);
+					li.append(mediabody);
+
+					$("ul.media-list").append(li);
+				}
 			});
 		});
 	</script>
