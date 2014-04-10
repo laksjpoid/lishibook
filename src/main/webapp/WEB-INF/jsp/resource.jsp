@@ -71,9 +71,6 @@
 				var md5 = $.md5($("#password").val());
 				$("#hiddenpassword").val(md5);
 			});
-			$("li.lb-focus").hover(function(){
-				$(this).toggleClass("lb-focus-hover");
-			});
 			$.get("/lishibook/ws/resource/${resource.id }/focuses",function(data){
 				for(var i in data){
 					node = data[i];
@@ -97,6 +94,9 @@
 
 					$("ul.media-list").append(li);
 				}
+				$("li.lb-focus").hover(function(){
+					$(this).toggleClass("lb-focus-hover");
+				});
 			});
 		});
 	</script>

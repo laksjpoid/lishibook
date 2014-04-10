@@ -97,10 +97,11 @@
 			function() {
 				tinymce.init({
 					selector : "textarea#content",
+					plugins: "link image",
 					theme : "modern",
 					height : 300,
 					menubar : "",
-					toolbar : "undo redo bold italic alignleft aligncenter alignright alignjustify bullist numlist outdent indent link image forecolor backcolor",
+					toolbar : "bold italic alignleft aligncenter alignright alignjustify bullist numlist outdent indent link image",
 					statusbar : false,
 				});
 				$('#fileupload').fileupload({
