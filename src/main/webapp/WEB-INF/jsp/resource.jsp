@@ -44,8 +44,10 @@
 		<div class="row lb-screen-height">
 			<div class="col-md-8">
 				<ul class="nav nav-tabs">
-					<li class="active"><a href="#">基本资料</a></li>
+					<li><a href="#">动态</a></li>
+					<li class="active"><a href="/lishibook/resource/${resource.id }">基本资料</a></li>
 					<li><a href="#">时间轴</a></li>
+					<li><a href="/lishibook/resource/focus/${resource.id }">关注</a></li>
 				</ul>
 				<div>${resource.content }</div>
 			</div>

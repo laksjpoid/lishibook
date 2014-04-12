@@ -54,7 +54,7 @@ public class ResourceController extends BaseController {
 		logger.debug("Exit ResourceController.showResource");
 		return modelView;
 	}
-
+	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView addResourcePage() throws PermissionException {
 		logger.debug("Enter ResourceController.addResourcePage");
