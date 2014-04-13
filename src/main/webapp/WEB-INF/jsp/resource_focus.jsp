@@ -56,42 +56,21 @@
 				<div class="row">
 					<div class="col-md-2">
 						<ul class="nav bs-sidenav">
-							<li class="active"><a href="#">${resource.name } 的关注</a></li>
+							<li class="active"><a href="/lishibook/resource/focus/${resource.id }">${resource.name } 的关注</a></li>
 							<li><a href="#">分组</a></li>
 						</ul>
 					</div>
 					<div class="col-md-7">
-						<div class="row">
-							<div class="col-md-4">
-								<div class="thumbnail">
-									<img src="/lishibook/pictures/20140409/139705128636044294.jpg" alt="..." style="height:200">
-									<div class="caption">
-										<h3>曹操</h3>
-										<p>曹操</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="thumbnail">
-									<img src="/lishibook/pictures/20140409/139705128636044294.jpg" alt="...">
-									<div class="caption">
-										<h3>曹操</h3>
-										<p>曹操</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="thumbnail">
-									<img src="/lishibook/pictures/20140409/139705128636044294.jpg" alt="...">
-									<div class="caption">
-										<h3>曹操</h3>
-										<p>曹操</p>
-									</div>
-								</div>
-							</div>
+						<div class="row lb-focuses">
 						</div>
 					</div>
-					<div class="col-md-3">搜索</div>
+					<div class="col-md-3">
+							<div class="form-group">
+								<label for="search">搜索资源</label>
+								<input type="text" class="form-control" id="searchkey" placeholder="资源名字">
+							</div>
+							<button id="searchbutton" type="submit" class="btn btn-default">查找</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -103,51 +82,65 @@
 	<script src="/lishibook/js/jquery-2.1.0.js"></script>
 	<script src="/lishibook/bootstrap-3.1.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$
-									.get(
-											"/lishibook/ws/resource/${resource.id }/focuses",
-											function(data) {
-												for ( var i in data) {
-													node = data[i];
-													var li = $("<li class='media lb-focus'/>");
-													var a = $("<a class='pull-left'/>");
-													a.attr("href",
-															"/lishibook/resource/"
-																	+ node.id);
-													var img = $(
-															"<img/>",
-															{
-																class : "media-object lb-focus-icon",
-																src : node.iconurl
-															});
-													img.appendTo(a);
-
-													var mediabody = $("<div class='media-body'/>");
-													var mediaheading = $("<h4 class='media-heading'/>");
-													mediaheading
-															.html(node.name);
-													mediaheading
-															.appendTo(mediabody);
-													mediabody
-															.append(node.description);
-													li.append(a);
-													li.append(mediabody);
-
-													$("ul.media-list").append(
-															li);
-												}
-												$("li.lb-focus")
-														.hover(
-																function() {
-																	$(this)
-																			.toggleClass(
-																					"lb-focus-hover");
-																});
-											});
-						});
+		function searchResource(name){
+			$.get("/lishibook/ws/resource/search?key="+name, function(data){
+				var root = $(".lb-focuses").html("");
+				
+				if(data[0]==null){
+					root.append("找不到资源!");
+				}
+				for ( var i in data) {
+					var node = data[i];
+					root.append(newResourceElement(node));
+				}
+			});
+		}
+		function newResourceElement(node){
+			var ele = $("<div>",{
+					class:"col-md-4",
+				});
+				var thumbnail = $("<div>",{
+					class:"thumbnail"
+				});
+				var image = $("<img>", {
+					src:node.iconurl,
+					alt:"...",
+					class:"img-rounded"
+				});
+				var cap = $("<div>",{
+					class:"caption"
+				});
+				var link1 = $("<a>",{
+					href: "/lishibook/resource/"+node.id
+				});
+				link1.html(image);
+				var head = $("<h3>").html(node.name);
+				var desc = $("<p>").html(node.description);
+				cap.append(head).append(desc);
+				
+				thumbnail.append(link1).append(cap);
+				ele.append(thumbnail);
+				
+				return ele;
+		}
+		$(document).ready(function() {
+			$("#searchbutton").click(function() {
+				var key = $("#searchkey").val();
+				$("#searchkey").val("");
+				searchResource(key);
+			});
+			$.get("/lishibook/ws/resource/${resource.id }/focuses",function(data) {
+			
+				if(data[0]==null){
+					$(".lb-focuses").append("尚未添加关注！");
+				}
+				for ( var i in data) {
+					var node = data[i];
+					
+					$(".lb-focuses").append(newResourceElement(node));
+				}
+			});
+		});
 	</script>
 </body>
 </html>
