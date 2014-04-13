@@ -1,6 +1,7 @@
 package com.lishibook.webservice;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -20,6 +21,7 @@ import com.lishibook.entity.ResourceFocus;
 import com.lishibook.exception.InternalException;
 import com.lishibook.exception.PermissionException;
 import com.lishibook.output.BaseResult;
+import com.lishibook.output.ResourceInfoOutput;
 import com.lishibook.service.ResourceFocusService;
 import com.lishibook.service.ResourceService;
 import com.lishibook.web.BaseController;
@@ -125,7 +127,7 @@ public class ResourceWebService extends BaseController {
 		logger.debug("Exit ResourceRestService.removefocus");
 		return result;
 	}
-	
+	/*
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Resource> search(@RequestParam("key")String key) throws InternalException{
@@ -136,5 +138,44 @@ public class ResourceWebService extends BaseController {
 		} catch (UnsupportedEncodingException e) {
 			throw new InternalException();
 		}
+	}
+	*/
+	/**
+	 * 查询的时候根据当前所在资源页面，用于获取是否是当前资源好友等信息
+	 * @param key
+	 * @param resourceId
+	 * @return
+	 * @throws InternalException
+	 */
+	@RequestMapping(value = "/search/{fromid}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ResourceInfoOutput> searchResources(@RequestParam("key")String key, @PathVariable("fromid") int resourceId) throws InternalException{
+		
+		List<ResourceInfoOutput> info = new ArrayList<ResourceInfoOutput>();
+		
+		try {
+			List<Resource> list = new ArrayList<Resource>();
+			String urlKey = new String(key.getBytes("ISO-8859-1"),"UTF-8");
+			list = resourceService.search(urlKey);
+			
+			for(Resource resource: list){
+				ResourceInfoOutput output = new ResourceInfoOutput();
+				output.setId(resource.getId());
+				output.setIconurl(resource.getIconurl());
+				output.setDescription(resource.getDescription());
+				output.setName(resource.getName());
+				output.setViews(resource.getViews());
+				if(resourceFocusService.exists(resourceId, resource.getId())){
+					output.setIsfocus(true);
+				}else{
+					output.setIsfocus(false);
+				}
+				info.add(output);
+			}
+		} catch (UnsupportedEncodingException e) {
+			throw new InternalException();
+		}
+		
+		return info;
 	}
 }

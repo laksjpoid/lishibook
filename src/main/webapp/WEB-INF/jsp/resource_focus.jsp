@@ -83,7 +83,7 @@
 	<script src="/lishibook/bootstrap-3.1.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		function searchResource(name){
-			$.get("/lishibook/ws/resource/search?key="+name, function(data){
+			$.get("/lishibook/ws/resource/search/${resource.id }?key="+name, function(data){
 				var root = $(".lb-focuses").html("");
 				
 				if(data[0]==null){
@@ -95,6 +95,26 @@
 				}
 			});
 		}
+		function listen(){
+			$(".resourcenode").click(function() {
+				console.log($(this).data("rid"));
+				if($(this).hasClass("isfocus")){//取消关注
+					
+				}else{//关注
+					$.post("/lishibook/ws/resource/${resource.id }/addfocus",
+						{
+						"focusrid": $(this).data("rid")
+						},
+						function (data, textStatus){
+							console.log(data);
+						}
+					);
+					$(this).toggleClass("isfocus");
+					$(this).html("取消关注");
+					
+				}
+			});
+		};
 		function newResourceElement(node){
 			var ele = $("<div>",{
 					class:"col-md-4",
@@ -116,7 +136,18 @@
 				link1.html(image);
 				var head = $("<h3>").html(node.name);
 				var desc = $("<p>").html(node.description);
-				cap.append(head).append(desc);
+				var button = $("<button>",{
+					type:"button",
+					class:"btn btn-default align-center resourcenode"
+				});
+				button.data("rid", node.id);
+				if(node.isfocus){
+					button.addClass("isfocus");
+					button.html("取消关注");
+				}else{
+					button.html("关注");
+				}
+				cap.append(head).append(desc).append(button);
 				
 				thumbnail.append(link1).append(cap);
 				ele.append(thumbnail);
@@ -124,6 +155,24 @@
 				return ele;
 		}
 		$(document).ready(function() {
+			$(".resourcenode").click(function() {
+				console.log($(this).data("rid"));
+				if($(this).hasClass("isfocus")){//取消关注
+					
+				}else{//关注
+					$.post("/lishibook/ws/resource/${resource.id }/addfocus",
+						{
+						"focusrid": $(this).data("rid")
+						},
+						function (data, textStatus){
+							console.log(data);
+						}
+					);
+					$(this).toggleClass("isfocus");
+					$(this).html("取消关注");
+					
+				}
+			});
 			$("#searchbutton").click(function() {
 				var key = $("#searchkey").val();
 				$("#searchkey").val("");
@@ -139,6 +188,7 @@
 					
 					$(".lb-focuses").append(newResourceElement(node));
 				}
+				listen();
 			});
 		});
 	</script>

@@ -1,6 +1,8 @@
 package com.lishibook.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +28,17 @@ public class ResourceFocusService {
 	
 	public int deleteFocus(int focusid){
 		return resourceFocusMapper.deleteByPrimaryKey(focusid);
+	}
+	
+	public boolean exists(int fromid, int toid){
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("fromid", fromid);
+		map.put("toid", toid);
+		
+		ResourceFocus focus = resourceFocusMapper.getFocus(map);
+		if(focus!=null){
+			return true;
+		}
+		return false;
 	}
 }

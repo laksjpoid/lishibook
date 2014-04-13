@@ -44,6 +44,10 @@
     from resource_focus
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getFocus" parameterType="map" resultMap="BaseResultMap">
+    select id from resource_focus 
+    where fromrid=#{fromid,jdbcType=INTEGER} and torid=#{toid,jdbcType=INTEGER}
+  </select>
   <select id="selectFocuses" resultMap="ResourceMap" parameterType="java.lang.Integer" >
     select 
     R.id as id, iconurl, name, description, views
