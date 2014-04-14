@@ -66,7 +66,7 @@ public class ResourceWebService extends BaseController {
 	@ResponseBody
 	public BaseResult addfocus(@PathVariable("resourceId") int resourceid,
 			@RequestParam("focusrid") int focusrid,
-			@RequestParam("desc") String desc) throws PermissionException{
+			@RequestParam(value="desc", required=false) String desc) throws PermissionException{
 		
 		logger.debug("Enter ResourceRestService.addfocus");
 		

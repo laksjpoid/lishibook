@@ -95,26 +95,6 @@
 				}
 			});
 		}
-		function listen(){
-			$(".resourcenode").click(function() {
-				console.log($(this).data("rid"));
-				if($(this).hasClass("isfocus")){//取消关注
-					
-				}else{//关注
-					$.post("/lishibook/ws/resource/${resource.id }/addfocus",
-						{
-						"focusrid": $(this).data("rid")
-						},
-						function (data, textStatus){
-							console.log(data);
-						}
-					);
-					$(this).toggleClass("isfocus");
-					$(this).html("取消关注");
-					
-				}
-			});
-		};
 		function newResourceElement(node){
 			var ele = $("<div>",{
 					class:"col-md-4",
@@ -141,6 +121,24 @@
 					class:"btn btn-default align-center resourcenode"
 				});
 				button.data("rid", node.id);
+				button.click(function(){
+					if($(this).hasClass("isfocus")){//取消关注
+						
+					}else{//关注
+						$.post("/lishibook/ws/resource/${resource.id }/addfocus",
+							{
+							"focusrid": $(this).data("rid")
+							},
+							function (data, status){
+								console.log(data);
+								console.log(status);
+							}
+						);
+						$(this).toggleClass("isfocus");
+						$(this).html("取消关注");
+						
+					}
+				});
 				if(node.isfocus){
 					button.addClass("isfocus");
 					button.html("取消关注");
@@ -188,7 +186,6 @@
 					
 					$(".lb-focuses").append(newResourceElement(node));
 				}
-				listen();
 			});
 		});
 	</script>
