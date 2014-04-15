@@ -47,7 +47,7 @@
 		<div class="row lb-screen-height">
 			<div class="col-md-12">
 				<ul class="nav nav-tabs">
-					<li><a href="#">动态</a></li>
+					<li><a href="#">最新动态</a></li>
 					<li><a href="/lishibook/resource/${resource.id }">基本资料</a></li>
 					<li><a href="#">时间轴</a></li>
 					<li class="active"><a href="/lishibook/resource/focus/${resource.id }">关注</a></li>
@@ -91,11 +91,11 @@
 				}
 				for ( var i in data) {
 					var node = data[i];
-					root.append(newResourceElement(node));
+					root.append(newSearchElement(node));
 				}
 			});
 		}
-		function newResourceElement(node){
+		function newSearchElement(node){
 			var ele = $("<div>",{
 					class:"col-md-4",
 				});
@@ -130,12 +130,15 @@
 							"focusrid": $(this).data("rid")
 							},
 							function (data, status){
-								console.log(data);
-								console.log(status);
+								var status = data.status;
+								if(status == 1){
+									console.log(data.status);
+									$(this).toggleClass("isfocus");
+									$(this).html("取消关注");
+								}
 							}
 						);
-						$(this).toggleClass("isfocus");
-						$(this).html("取消关注");
+						
 						
 					}
 				});
@@ -146,6 +149,35 @@
 					button.html("关注");
 				}
 				cap.append(head).append(desc).append(button);
+				
+				thumbnail.append(link1).append(cap);
+				ele.append(thumbnail);
+				
+				return ele;
+		}
+		function newResourceElement(node){
+			var ele = $("<div>",{
+					class:"col-md-4",
+				});
+				var thumbnail = $("<div>",{
+					class:"thumbnail"
+				});
+				var image = $("<img>", {
+					src:node.iconurl,
+					alt:"...",
+					class:"img-rounded"
+				});
+				var cap = $("<div>",{
+					class:"caption"
+				});
+				var link1 = $("<a>",{
+					href: "/lishibook/resource/"+node.id
+				});
+				link1.html(image);
+				var head = $("<h3>").html(node.name);
+				var desc = $("<p>").html(node.description);
+				
+				cap.append(head).append(desc);
 				
 				thumbnail.append(link1).append(cap);
 				ele.append(thumbnail);

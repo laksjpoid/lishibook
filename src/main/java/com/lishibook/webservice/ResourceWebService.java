@@ -77,6 +77,14 @@ public class ResourceWebService extends BaseController {
 		if (!currentUser.hasRole("admin")) {
 			throw new PermissionException();
 		}
+		
+		if(resourceid == focusrid){
+			result.setStatus(-1);
+			result.setMessage("添加失败！不能关注自身！");
+			
+			return result;
+		}
+		
 		ResourceFocus resourceFocus = new ResourceFocus();
 		resourceFocus.setFromrid(resourceid);
 		resourceFocus.setTorid(focusrid);

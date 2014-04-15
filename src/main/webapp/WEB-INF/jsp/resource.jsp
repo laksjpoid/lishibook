@@ -44,7 +44,7 @@
 		<div class="row lb-screen-height">
 			<div class="col-md-8">
 				<ul class="nav nav-tabs">
-					<li><a href="#">动态</a></li>
+					<li><a href="#">最新动态</a></li>
 					<li class="active"><a href="/lishibook/resource/${resource.id }">基本资料</a></li>
 					<li><a href="#">时间轴</a></li>
 					<li><a href="/lishibook/resource/focus/${resource.id }">关注</a></li>
@@ -69,10 +69,6 @@
 	<script src="/lishibook/bootstrap-3.1.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("form").submit(function() {
-				var md5 = $.md5($("#password").val());
-				$("#hiddenpassword").val(md5);
-			});
 			$.get("/lishibook/ws/resource/${resource.id }/focuses",function(data){
 				for(var i in data){
 					node = data[i];
